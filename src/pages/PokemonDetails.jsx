@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom/dist";
 import axios from "axios";
 import { Fragment, useEffect } from "react";
 import capitalizeName from "../utils/capitalize";
-import { Center } from "@mantine/core";
+import { Center, Table } from "@mantine/core";
 import { useState } from "react";
 import Loader from "../components/Loader";
 import { setTypeColor } from "../utils/typeColors";
@@ -15,13 +15,15 @@ const PokemonDetails = () => {
   const [levelingMoves, setLevelingMoves] = useState([]);
   const [machineMoves, setMachineMoves] = useState([]);
   const [tutorMoves, setTutorMoves] = useState([]);
+  const [collapsedLevelMoves, setCollapsedLevelMoves] = useState(true);
+  const [collapsedMachineMoves, setCollapsedMachineMoves] = useState(true);
+  const [collapsedTutorMoves, setCollapsedTutorMoves] = useState(true);
 
   const grabMoves = () => {
     const machine = [];
     const levelUp = [];
     const tutor = [];
     if (pokemon) {
-      console.log(pokemon.moves);
       pokemon.moves.forEach((move) => {
         let length = move.version_group_details.length - 1;
         if (
@@ -170,6 +172,112 @@ const PokemonDetails = () => {
                   </Fragment>
                 );
               })}
+            </div>
+            <div className="movesBox">
+              <div className="levelUpMoves">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setCollapsedLevelMoves(!collapsedLevelMoves);
+                  }}
+                >
+                  {collapsedLevelMoves
+                    ? "Show Level Up Moves"
+                    : "Collapse Level Up Moves"}
+                </button>
+                {collapsedLevelMoves ? undefined : (
+                  <Table striped withTableBorder style={{ width: "50vw" }}>
+                    <Table.Thead>
+                      <Table.Tr>
+                        <Table.Th>Level Learned At</Table.Th>
+                        <Table.Th>Move Name</Table.Th>
+                      </Table.Tr>
+                    </Table.Thead>
+                    <Table.Tbody>
+                      {levelingMoves.map((move) => {
+                        return (
+                          <Table.Tr key={move.name}>
+                            <Table.Td>{move.level}</Table.Td>
+                            <Table.Td>{capitalizeName(move.name)}</Table.Td>
+                          </Table.Tr>
+                        );
+                      })}
+                    </Table.Tbody>
+                  </Table>
+                )}
+              </div>
+              <div className="tutorMoves">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setCollapsedTutorMoves(!collapsedTutorMoves);
+                  }}
+                >
+                  {collapsedTutorMoves
+                    ? "Show Tutor Moves"
+                    : "Collapse Tutor Moves"}
+                </button>
+                {collapsedTutorMoves ? undefined : (
+                  <Table
+                    striped
+                    withTableBorder
+                    style={{ width: "50vw", textAlign: "center" }}
+                  >
+                    <Table.Thead>
+                      <Table.Tr>
+                        <Table.Th style={{ textAlign: "center" }}>
+                          Move Name
+                        </Table.Th>
+                      </Table.Tr>
+                    </Table.Thead>
+                    <Table.Tbody>
+                      {tutorMoves.map((move) => {
+                        return (
+                          <Table.Tr key={move.name}>
+                            <Table.Td>{capitalizeName(move.name)}</Table.Td>
+                          </Table.Tr>
+                        );
+                      })}
+                    </Table.Tbody>
+                  </Table>
+                )}
+              </div>
+              <div className="machineMoves">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setCollapsedMachineMoves(!collapsedMachineMoves);
+                  }}
+                >
+                  {collapsedMachineMoves
+                    ? "Show Machine Moves"
+                    : "Collapse Machine Moves"}
+                </button>
+                {collapsedMachineMoves ? undefined : (
+                  <Table
+                    striped
+                    withTableBorder
+                    style={{ width: "50vw", textAlign: "center" }}
+                  >
+                    <Table.Thead>
+                      <Table.Tr>
+                        <Table.Th style={{ textAlign: "center" }}>
+                          Move Name
+                        </Table.Th>
+                      </Table.Tr>
+                    </Table.Thead>
+                    <Table.Tbody>
+                      {machineMoves.map((move) => {
+                        return (
+                          <Table.Tr key={move.name}>
+                            <Table.Td>{capitalizeName(move.name)}</Table.Td>
+                          </Table.Tr>
+                        );
+                      })}
+                    </Table.Tbody>
+                  </Table>
+                )}
+              </div>
             </div>
           </div>
         )}
