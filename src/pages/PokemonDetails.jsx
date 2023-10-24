@@ -12,6 +12,45 @@ import { getStatColor } from "../utils/statColors";
 const PokemonDetails = () => {
   const { dexNumber } = useParams();
   const [pokemon, setPokemon] = useState();
+  const [levelingMoves, setLevelingMoves] = useState([]);
+  const [machineMoves, setMachineMoves] = useState([]);
+  const [tutorMoves, setTutorMoves] = useState([]);
+
+  const grabMoves = () => {
+    const machine = [];
+    const levelUp = [];
+    const tutor = [];
+    if (pokemon) {
+      console.log(pokemon.moves);
+      pokemon.moves.forEach((move) => {
+        let length = move.version_group_details.length - 1;
+        if (
+          move.version_group_details[length].move_learn_method.name ===
+          "level-up"
+        ) {
+          levelUp.push({
+            name: move.move.name,
+            level: move.version_group_details[length].level_learned_at,
+          });
+        } else if (
+          move.version_group_details[length].move_learn_method.name ===
+          "machine"
+        ) {
+          machine.push({ name: move.move.name });
+        } else if (
+          move.version_group_details[length].move_learn_method.name === "tutor"
+        ) {
+          tutor.push({ name: move.move.name });
+        }
+      });
+      levelUp.sort((a, b) => {
+        return a.level - b.level;
+      });
+      setMachineMoves(machine);
+      setLevelingMoves(levelUp);
+      setTutorMoves(tutor);
+    }
+  };
 
   useEffect(() => {
     const fetchPokemon = async () => {
@@ -26,6 +65,10 @@ const PokemonDetails = () => {
     };
     fetchPokemon();
   }, [dexNumber]);
+
+  useEffect(() => {
+    grabMoves();
+  }, [pokemon]);
   return (
     <div className="pageContainer">
       <Center>
