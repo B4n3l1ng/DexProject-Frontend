@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ProtectedRoute from "./components/ProtectedRoute";
 import DexPage from "./pages/DexPage";
+import PokemonDetails from "./pages/PokemonDetails";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           }
         />
         <Route path="/dex" element={<DexPage />} />
+        <Route path="/dex/pokemon/:dexNumber" element={<PokemonDetails />} />
       </Routes>
     </>
   );

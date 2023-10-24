@@ -5,6 +5,7 @@ import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import { AuthProviderWrapper } from "./context/auth.context";
 import "@mantine/core/styles.css";
+import "@mantine/carousel/styles.css";
 
 import { MantineProvider } from "@mantine/core";
 
