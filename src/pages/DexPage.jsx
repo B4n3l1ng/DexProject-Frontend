@@ -31,18 +31,27 @@ const DexPage = () => {
         <Loader />
       ) : (
         <>
-          <Table striped withTableBorder style={{ width: "50vw" }}>
+          <Table
+            striped
+            withTableBorder
+            style={{ width: "50vw", margin: "center" }}
+          >
             <Table.Thead>
               <Table.Tr>
-                <Table.Th>PokéDex Number</Table.Th>
-                <Table.Th>Pokémon</Table.Th>
-                <Table.Th>Link</Table.Th>
+                <Table.Th style={{ textAlign: "center" }}>
+                  PokéDex Number
+                </Table.Th>
+                <Table.Th style={{ textAlign: "center" }}>Pokémon</Table.Th>
+                <Table.Th style={{ textAlign: "center" }}>Link</Table.Th>
               </Table.Tr>
             </Table.Thead>
             <Table.Tbody>
               {pokemons.map((pokemon, index) => {
                 return (
-                  <Table.Tr key={index}>
+                  <Table.Tr
+                    key={index}
+                    style={{ textAlign: "center", backgroundColor: "white" }}
+                  >
                     <Table.Td>{index + 1}</Table.Td>
                     <Table.Td>{capitalizeName(pokemon.name)}</Table.Td>
                     <Table.Td>

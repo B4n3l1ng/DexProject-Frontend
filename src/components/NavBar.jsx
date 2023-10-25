@@ -5,7 +5,7 @@ import { useContext } from "react";
 const NavBar = () => {
   const { isLoggedIn, isLoading, logOutUser } = useContext(AuthContext);
   return (
-    <nav>
+    <nav className="navBar">
       <ul>
         {!isLoading && isLoggedIn && (
           <>
