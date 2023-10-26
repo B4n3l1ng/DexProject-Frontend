@@ -34,9 +34,11 @@ const DexPage = () => {
           <Table
             striped
             withTableBorder
-            style={{ width: "50vw", margin: "center" }}
+            style={{ width: "50vw", margin: "auto", marginTop: "2em" }}
           >
-            <Table.Thead>
+            <Table.Thead
+              style={{ backgroundColor: "#053742", color: "#39a2db" }}
+            >
               <Table.Tr>
                 <Table.Th style={{ textAlign: "center" }}>
                   PokéDex Number
@@ -50,7 +52,11 @@ const DexPage = () => {
                 return (
                   <Table.Tr
                     key={index}
-                    style={{ textAlign: "center", backgroundColor: "white" }}
+                    style={{
+                      textAlign: "center",
+                      backgroundColor: "#39a2db",
+                      color: "black",
+                    }}
                   >
                     <Table.Td>{index + 1}</Table.Td>
                     <Table.Td>{capitalizeName(pokemon.name)}</Table.Td>

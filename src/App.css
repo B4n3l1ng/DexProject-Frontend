@@ -243,32 +243,38 @@
   text-align: center;
 }
 
-.pkmImgOuterBox {
-  width: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: auto;
+.boxWithRadius {
+  background-color: #39a2db;
+  border-radius: 2rem;
+  color: #053742;
 }
 
-.pkmImgInnerBox {
+.carousel {
+  width: 50%;
+  background-color: #39a2db;
+  border-radius: 2rem;
+}
+.pkmImgBox {
   width: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: auto;
   flex-direction: column;
+  gap: 2em;
 }
-.pkmImgInnerBox div {
+.pkmImgBox div {
   text-align: center;
   padding: 1em;
   width: 100%;
-  border: 1px solid black;
+  border: 2px solid #39a2db;
+  border-radius: 2rem;
+  background-color: #053742;
+  color: #39a2db;
 }
 
 .pkmImg {
-  width: 100%;
-  border: 1px solid black;
+  width: 50%;
 }
 
 .typesAndAbility {
@@ -284,31 +290,42 @@
 .typesBox {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   gap: 1em;
   width: 50%;
-  border: 1px solid black;
-  padding: 1em 1em;
+  padding: 0.1em 1em;
   min-height: 100%;
 }
 
-.typesBox div {
+.type {
+  color: white;
   padding: 0.5em 1em;
   width: 60%;
   text-align: center;
+  border-radius: 2em;
 }
 
 .abilitiesBox {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  gap: 1em;
+  gap: 1.7em;
   width: 50%;
   border: 1px solid black;
-  padding: 1em 1em;
+  padding: 0.1em 1em;
   min-height: 100%;
+}
+
+.drkBlueBox {
+  width: 100%;
+  text-align: center;
+  background-color: #053742;
+  padding: 1em;
+  margin-top: 0;
+  border-radius: 2em;
+  color: #39a2db;
 }
 
 .baseStatsBox {
@@ -324,15 +341,22 @@
   justify-content: center;
   align-items: center;
   margin-bottom: 1em;
+  color: white;
 }
 
 .baseStatName {
   width: 50%;
   text-align: left;
+  padding-left: 3em;
+}
+
+.whiteText {
+  color: white;
 }
 
 .baseStatContainer {
   width: 50%;
+  padding-left: 4em;
 }
 
 .Tabs {
@@ -341,6 +365,7 @@
   min-height: 400px;
   background: #053742;
   margin: 3.5rem auto 1.5rem;
+  margin-top: 0;
   padding: 2rem 1rem;
   color: #e8f0f2;
   border-radius: 2rem;
@@ -390,8 +415,4 @@ ul.nav li:hover {
 }
 ul.nav li.active {
   background: #39a2db;
-}
-
-tbody {
-  color: black;
 }

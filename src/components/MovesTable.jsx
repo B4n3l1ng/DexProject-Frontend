@@ -3,8 +3,16 @@ import { Table } from "@mantine/core";
 import capitalizeName from "../utils/capitalize";
 const MovesTable = ({ array, hasLevel }) => {
   return (
-    <Table striped withTableBorder style={{ width: "50vw", margin: "auto" }}>
-      <Table.Thead style={{ backgroundColor: "#39a2db", color: "#053742" }}>
+    <Table
+      striped
+      withTableBorder
+      className="table"
+      style={{
+        width: "50vw",
+        margin: "auto",
+      }}
+    >
+      <Table.Thead style={{ backgroundColor: "#053742", color: "#39a2db" }}>
         <Table.Tr>
           {hasLevel ? (
             <Table.Th style={{ textAlign: "center" }}>
@@ -20,7 +28,11 @@ const MovesTable = ({ array, hasLevel }) => {
           return (
             <Table.Tr
               key={move.name}
-              style={{ textAlign: "center", backgroundColor: "white" }}
+              style={{
+                textAlign: "center",
+                backgroundColor: "#39a2db",
+                color: "black",
+              }}
             >
               {hasLevel ? <Table.Td>{move.level}</Table.Td> : undefined}
               <Table.Td>{capitalizeName(move.name)}</Table.Td>

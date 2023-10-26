@@ -77,24 +77,20 @@ const PokemonDetails = () => {
         ) : (
           <div className="pokemonPage">
             <h1>{capitalizeName(pokemon.name)}</h1>
-            <Carousel withIndicators height={490} loop>
-              <Carousel.Slide className="pkmImgInnerBox">
+            <Carousel
+              /* withIndicators */ height={490}
+              loop
+              className="carousel"
+            >
+              <Carousel.Slide className="pkmImgBox">
                 <img
                   src={pokemon.sprites.front_default}
                   alt={pokemon.name}
                   className="pkmImg"
                 />
-                <div>Normal</div>
+                <div>Regular</div>
               </Carousel.Slide>
-              <Carousel.Slide className="pkmImgInnerBox">
-                <img
-                  src={pokemon.sprites.back_default}
-                  alt={pokemon.name}
-                  className="pkmImg"
-                />
-                <div>Back Normal</div>
-              </Carousel.Slide>
-              <Carousel.Slide className="pkmImgInnerBox">
+              <Carousel.Slide className="pkmImgBox">
                 <img
                   src={pokemon.sprites.front_shiny}
                   alt={pokemon.name}
@@ -102,39 +98,36 @@ const PokemonDetails = () => {
                 />
                 <div>Shiny</div>
               </Carousel.Slide>
-              <Carousel.Slide className="pkmImgInnerBox">
-                <img
-                  src={pokemon.sprites.back_shiny}
-                  alt={pokemon.name}
-                  className="pkmImg"
-                />
-                <div>Back Shiny</div>
-              </Carousel.Slide>
             </Carousel>
             <div className="typesAndAbility">
-              <div className="typesBox">
-                <h4>Typing</h4>
+              <div className="typesBox boxWithRadius">
+                <div className="drkBlueBox">Typing</div>
                 {pokemon.types.map((type) => (
                   <div
                     key={type.slot}
                     style={{
                       backgroundColor: `${setTypeColor(type.type.name)}`,
                     }}
+                    className="type"
                   >
                     {capitalizeName(type.type.name)}
                   </div>
                 ))}
               </div>
-              <div className="abilitiesBox">
-                <h4>Abilities</h4>
+              <div className="abilitiesBox boxWithRadius">
+                <div className="drkBlueBox">Abilities</div>
+
                 {pokemon.abilities.map((ability) => (
-                  <div key={ability.slot}>
+                  <div key={ability.slot} className="whiteText">
                     {capitalizeName(ability.ability.name)}
                   </div>
                 ))}
                 {pokemon.past_abilities?.length >= 1
                   ? pokemon.past_abilities.map((pastAbility) => (
-                      <div key={`past${pastAbility.slot}`}>
+                      <div
+                        key={`past${pastAbility.slot}`}
+                        className="whiteText"
+                      >
                         {capitalizeName(pastAbility.abilities[0].ability.name)}{" "}
                         until generation{" "}
                         {capitalizeName(pastAbility.generation.name)
@@ -145,8 +138,10 @@ const PokemonDetails = () => {
                   : undefined}
               </div>
             </div>
-            <div className="baseStatsBox">
-              <h3>Base Stats</h3>
+            <div className="baseStatsBox boxWithRadius">
+              <div className="drkBlueBox" style={{ marginBottom: "1em" }}>
+                Base Stats
+              </div>
               {pokemon.stats.map((element) => {
                 return (
                   <Fragment key={element.stat.name}>
