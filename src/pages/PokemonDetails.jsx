@@ -1,14 +1,15 @@
-import { useParams } from "react-router-dom/dist";
+import { Link, useParams } from "react-router-dom/dist";
 import axios from "axios";
 import { Fragment, useEffect } from "react";
 import capitalizeName from "../utils/capitalize";
-import { Center } from "@mantine/core";
+import { Button, Center } from "@mantine/core";
 import { useState } from "react";
 import Loader from "../components/Loader";
 import { setTypeColor } from "../utils/typeColors";
 import { Carousel } from "@mantine/carousel";
 import { getStatColor } from "../utils/statColors";
 import Tabs from "../components/TabComponent/Tabs";
+import placeholder from "../assets/No-Image-Placeholder.svg.png";
 
 const PokemonDetails = () => {
   const { dexNumber } = useParams();
@@ -16,6 +17,8 @@ const PokemonDetails = () => {
   const [levelingMoves, setLevelingMoves] = useState([]);
   const [machineMoves, setMachineMoves] = useState([]);
   const [tutorMoves, setTutorMoves] = useState([]);
+  const [normalImage, setNormalImage] = useState(null);
+  const [shinyImage, setShinyImage] = useState(null);
 
   const grabMoves = () => {
     const machine = [];
@@ -59,6 +62,8 @@ const PokemonDetails = () => {
           `${import.meta.env.VITE_API_BASEURL}/pokemon/${dexNumber}`
         );
         setPokemon(data);
+        setNormalImage(data.sprites.other["official-artwork"].front_default);
+        setShinyImage(data.sprites.other["official-artwork"].front_shiny);
       } catch (error) {
         console.log(error);
       }
@@ -69,8 +74,10 @@ const PokemonDetails = () => {
   useEffect(() => {
     grabMoves();
   }, [pokemon]);
+
+  console.log(`${parseInt(dexNumber) + 1}`);
   return (
-    <div className="pageContainer">
+    <div className="pageContainer" id="container">
       <Center>
         {!pokemon ? (
           <Loader />
@@ -84,17 +91,20 @@ const PokemonDetails = () => {
             >
               <Carousel.Slide className="pkmImgBox">
                 <img
-                  src={pokemon.sprites.front_default}
+                  src={normalImage ? normalImage : placeholder}
                   alt={pokemon.name}
                   className="pkmImg"
+                  style={{ maxHeight: "390px" }}
                 />
                 <div>Regular</div>
               </Carousel.Slide>
+
               <Carousel.Slide className="pkmImgBox">
                 <img
-                  src={pokemon.sprites.front_shiny}
+                  src={shinyImage ? shinyImage : placeholder}
                   alt={pokemon.name}
                   className="pkmImg"
+                  style={{ maxHeight: "390px" }}
                 />
                 <div>Shiny</div>
               </Carousel.Slide>
@@ -172,6 +182,29 @@ const PokemonDetails = () => {
                 tutorMoves={tutorMoves}
                 machineMoves={machineMoves}
               />
+            </div>
+            <div
+              style={{
+                marginTop: "-40px",
+                display: "flex",
+                gap: "1em",
+                marginBottom: "1em",
+              }}
+            >
+              {dexNumber > 0 ? (
+                <Link to={`/dex/pokemon/${dexNumber - 1}`}>
+                  <Button variant="filled" radius="md" color="#39a2db">
+                    Previous Pokemon
+                  </Button>
+                </Link>
+              ) : undefined}
+              {dexNumber < 1017 ? (
+                <Link to={`/dex/pokemon/${parseInt(dexNumber) + 1}`}>
+                  <Button variant="filled" radius="md" color="#39a2db">
+                    Next Pokemon
+                  </Button>
+                </Link>
+              ) : undefined}
             </div>
           </div>
         )}

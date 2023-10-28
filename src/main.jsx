@@ -8,6 +8,7 @@ import "@mantine/core/styles.css";
 import "@mantine/carousel/styles.css";
 
 import { MantineProvider } from "@mantine/core";
+import ScrollToTop from "./components/ScrollToTop.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -15,6 +16,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <BrowserRouter>
         <AuthProviderWrapper>
           <App />
+          <ScrollToTop />
         </AuthProviderWrapper>
       </BrowserRouter>
     </MantineProvider>
