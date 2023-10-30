@@ -15,12 +15,14 @@ const MovesTable = ({ array, hasLevel }) => {
       <Table.Thead style={{ backgroundColor: "#053742", color: "#39a2db" }}>
         <Table.Tr>
           {hasLevel ? (
-            <Table.Th style={{ textAlign: "center" }}>
+            <Table.Th style={{ textAlign: "center", color: "#fa5252" }}>
               Level Learned At
             </Table.Th>
           ) : undefined}
 
-          <Table.Th style={{ textAlign: "center" }}>Move Name</Table.Th>
+          <Table.Th style={{ textAlign: "center", color: "#fa5252" }}>
+            Move Name
+          </Table.Th>
         </Table.Tr>
       </Table.Thead>
       <Table.Tbody>

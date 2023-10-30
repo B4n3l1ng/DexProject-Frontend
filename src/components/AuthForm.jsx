@@ -11,6 +11,7 @@ const AuthForm = ({
   setName,
   errorMessage,
   handleSubmit,
+  isSignUp,
 }) => {
   const errorIcon = (
     <img src={missingNo} alt="error" style={{ width: "10px" }} />
@@ -59,7 +60,7 @@ const AuthForm = ({
           <Space h="md" />
           {errorMessage ? (
             <Alert
-              variant="outline"
+              variant="filled"
               color="red"
               radius="lg"
               title="Error while registering."
@@ -77,7 +78,7 @@ const AuthForm = ({
               radius="lg"
               m="s"
             >
-              SignUp
+              {isSignUp ? <>Sign Up</> : <>Log In</>}
             </Button>
           </Center>
         </form>

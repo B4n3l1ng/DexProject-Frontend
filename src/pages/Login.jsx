@@ -25,8 +25,10 @@ const Login = () => {
       }
     } catch (error) {
       console.log(error);
-      if (error.response.data) {
+      if (error.response?.data) {
         setErrorMessage(error.response.data.message);
+      } else {
+        setErrorMessage("Error contacting the server, please try again.");
       }
     }
   };

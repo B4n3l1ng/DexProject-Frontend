@@ -2,9 +2,8 @@ import { Link, useParams } from "react-router-dom/dist";
 import axios from "axios";
 import { Fragment, useEffect } from "react";
 import capitalizeName from "../utils/capitalize";
-import { Button, Center } from "@mantine/core";
+import { Button, Center, Loader } from "@mantine/core";
 import { useState } from "react";
-import Loader from "../components/Loader";
 import { setTypeColor } from "../utils/typeColors";
 import { Carousel } from "@mantine/carousel";
 import { getStatColor } from "../utils/statColors";
@@ -14,46 +13,12 @@ import placeholder from "../assets/No-Image-Placeholder.svg.png";
 const PokemonDetails = () => {
   const { dexNumber } = useParams();
   const [pokemon, setPokemon] = useState();
+  const [isLoading, setIsLoading] = useState(true);
   const [levelingMoves, setLevelingMoves] = useState([]);
   const [machineMoves, setMachineMoves] = useState([]);
   const [tutorMoves, setTutorMoves] = useState([]);
   const [normalImage, setNormalImage] = useState(null);
   const [shinyImage, setShinyImage] = useState(null);
-
-  const grabMoves = () => {
-    const machine = [];
-    const levelUp = [];
-    const tutor = [];
-    if (pokemon) {
-      pokemon.moves.forEach((move) => {
-        let length = move.version_group_details.length - 1;
-        if (
-          move.version_group_details[length].move_learn_method.name ===
-          "level-up"
-        ) {
-          levelUp.push({
-            name: move.move.name,
-            level: move.version_group_details[length].level_learned_at,
-          });
-        } else if (
-          move.version_group_details[length].move_learn_method.name ===
-          "machine"
-        ) {
-          machine.push({ name: move.move.name });
-        } else if (
-          move.version_group_details[length].move_learn_method.name === "tutor"
-        ) {
-          tutor.push({ name: move.move.name });
-        }
-      });
-      levelUp.sort((a, b) => {
-        return a.level - b.level;
-      });
-      setMachineMoves(machine);
-      setLevelingMoves(levelUp);
-      setTutorMoves(tutor);
-    }
-  };
 
   useEffect(() => {
     const fetchPokemon = async () => {
@@ -64,31 +29,98 @@ const PokemonDetails = () => {
         setPokemon(data);
         setNormalImage(data.sprites.other["official-artwork"].front_default);
         setShinyImage(data.sprites.other["official-artwork"].front_shiny);
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
       }
     };
+    setIsLoading(true);
     fetchPokemon();
   }, [dexNumber]);
 
   useEffect(() => {
+    const grabMoves = () => {
+      const machine = [];
+      const levelUp = [];
+      const tutor = [];
+      if (pokemon) {
+        pokemon.moves.forEach((move) => {
+          let length = move.version_group_details.length - 1;
+          if (
+            move.version_group_details[length].move_learn_method.name ===
+            "level-up"
+          ) {
+            levelUp.push({
+              name: move.move.name,
+              level: move.version_group_details[length].level_learned_at,
+            });
+          } else if (
+            move.version_group_details[length].move_learn_method.name ===
+            "machine"
+          ) {
+            machine.push({ name: move.move.name });
+          } else if (
+            move.version_group_details[length].move_learn_method.name ===
+            "tutor"
+          ) {
+            tutor.push({ name: move.move.name });
+          }
+        });
+        levelUp.sort((a, b) => {
+          return a.level - b.level;
+        });
+        setMachineMoves(machine);
+        setLevelingMoves(levelUp);
+        setTutorMoves(tutor);
+      }
+    };
     grabMoves();
   }, [pokemon]);
 
-  console.log(`${parseInt(dexNumber) + 1}`);
   return (
     <div className="pageContainer" id="container">
       <Center>
-        {!pokemon ? (
-          <Loader />
+        {isLoading || !pokemon ? (
+          <Loader color="red" size={50} type="bars" className="loader" />
         ) : (
           <div className="pokemonPage">
-            <h1>{capitalizeName(pokemon.name)}</h1>
-            <Carousel
-              /* withIndicators */ height={490}
-              loop
-              className="carousel"
+            <div
+              style={{
+                display: "flex",
+                gap: "1em",
+                marginBottom: "-1em",
+                marginTop: "1em",
+              }}
             >
+              {dexNumber > 0 ? (
+                <Link to={`/dex/pokemon/${dexNumber - 1}`}>
+                  <Button
+                    type="button"
+                    variant="filled"
+                    color="red"
+                    radius="lg"
+                    m="s"
+                  >
+                    Previous Pokemon
+                  </Button>
+                </Link>
+              ) : undefined}
+              {dexNumber < 1017 ? (
+                <Link to={`/dex/pokemon/${parseInt(dexNumber) + 1}`}>
+                  <Button
+                    type="button"
+                    variant="filled"
+                    color="red"
+                    radius="lg"
+                    m="s"
+                  >
+                    Next Pokemon
+                  </Button>
+                </Link>
+              ) : undefined}
+            </div>
+            <h1>{capitalizeName(pokemon.name)}</h1>
+            <Carousel height={490} loop className="carousel">
               <Carousel.Slide className="pkmImgBox">
                 <img
                   src={normalImage ? normalImage : placeholder}
@@ -166,6 +198,8 @@ const PokemonDetails = () => {
                             backgroundColor: `${getStatColor(
                               element.stat.name
                             )}`,
+                            color: "black",
+                            fontWeight: "500",
                           }}
                         >
                           {element.base_stat}
@@ -193,14 +227,26 @@ const PokemonDetails = () => {
             >
               {dexNumber > 0 ? (
                 <Link to={`/dex/pokemon/${dexNumber - 1}`}>
-                  <Button variant="filled" radius="md" color="#39a2db">
+                  <Button
+                    type="button"
+                    variant="filled"
+                    color="red"
+                    radius="lg"
+                    m="s"
+                  >
                     Previous Pokemon
                   </Button>
                 </Link>
               ) : undefined}
               {dexNumber < 1017 ? (
                 <Link to={`/dex/pokemon/${parseInt(dexNumber) + 1}`}>
-                  <Button variant="filled" radius="md" color="#39a2db">
+                  <Button
+                    type="button"
+                    variant="filled"
+                    color="red"
+                    radius="lg"
+                    m="s"
+                  >
                     Next Pokemon
                   </Button>
                 </Link>

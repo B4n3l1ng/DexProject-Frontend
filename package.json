@@ -16,11 +16,7 @@
     "axios": "^1.5.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-<<<<<<< HEAD
     "react-paginate": "^8.2.0",
-=======
-    "react-magic-motion": "^1.0.8",
->>>>>>> 5b768ba5c3397dac089ad4a5bd8a79aa2ca3d646
     "react-router-dom": "^6.16.0"
   },
   "devDependencies": {

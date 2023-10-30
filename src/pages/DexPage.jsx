@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Loader } from "@mantine/core";
 import ReactPaginate from "react-paginate";
-import Loader from "../components/Loader";
 import capitalizeName from "../utils/capitalize";
 
 const DexPage = () => {
@@ -42,22 +41,6 @@ const DexPage = () => {
     setCurrentPage(selectedPage.selected);
   };
 
-  function capitalizeName(string) {
-    if (string.includes("-")) {
-      const array = string.split("-");
-      let newString = "";
-      array.forEach((element, index) => {
-        if (index === 0) {
-          newString += element.charAt(0).toUpperCase() + element.slice(1);
-        } else {
-          newString += " " + element.charAt(0).toUpperCase() + element.slice(1);
-        }
-      });
-      return newString;
-    } else {
-      return string.charAt(0).toUpperCase() + string.slice(1);
-    }
-  }
   useEffect(() => {
     fetchPokemons();
   }, []);
@@ -92,9 +75,13 @@ const DexPage = () => {
                 <Table striped withTableBorder style={{ width: "50vw" }}>
                   <Table.Thead>
                     <Table.Tr>
-                      <Table.Th>PokéDex Number</Table.Th>
-                      <Table.Th>Pokémon</Table.Th>
-                      <Table.Th>Link</Table.Th>
+                      <Table.Th style={{ textAlign: "center" }}>
+                        PokéDex Number
+                      </Table.Th>
+                      <Table.Th style={{ textAlign: "center" }}>
+                        Pokémon
+                      </Table.Th>
+                      <Table.Th style={{ textAlign: "center" }}>Link</Table.Th>
                     </Table.Tr>
                   </Table.Thead>
                   <Table.Tbody>
@@ -104,8 +91,19 @@ const DexPage = () => {
                           <Table.Td>{pokemon.dexNumber}</Table.Td>
                           <Table.Td>{capitalizeName(pokemon.name)}</Table.Td>
                           <Table.Td>
-                            <Link to={`/dex/pokemon/${pokemon.dexNumber}`}>
-                              More info
+                            <Link
+                              to={`/dex/pokemon/${pokemon.dexNumber}`}
+                              className="tableLink"
+                            >
+                              <Button
+                                type="button"
+                                variant="filled"
+                                color="red"
+                                radius="lg"
+                                m="s"
+                              >
+                                More info
+                              </Button>
                             </Link>
                           </Table.Td>
                         </Table.Tr>

@@ -43,6 +43,7 @@ const Signup = () => {
         setName={setName}
         handleSubmit={handleSubmit}
         errorMessage={errorMessage}
+        isSignUp
       />
     </>
   );
