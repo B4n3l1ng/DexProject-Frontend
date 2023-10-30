@@ -1,0 +1,18 @@
+.paginationContainer {
+  color: red;
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 63vw;
+  margin-left: -2.4em;
+}
+
+.selectedPage {
+  color: black !important;
+  text-decoration: none;
+}
+
+Table a {
+  color: red;
+}

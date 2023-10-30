@@ -2,9 +2,15 @@ import { Center, Table } from "@mantine/core";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { Loader } from "@mantine/core";
+import ReactPaginate from "react-paginate";
 
 const DexPage = () => {
   const [pokemons, setPokemons] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const itemsPerPage = 100;
 
   const fetchPokemons = async () => {
     try {
@@ -12,12 +18,28 @@ const DexPage = () => {
         `${import.meta.env.VITE_API_BASEURL}/pokemon?limit=2000`
       );
       if (response.status === 200) {
-        setPokemons(response.data.results);
+        const indexAdded = response.data.results.map((pokemon, index) => ({
+          name: pokemon.name,
+          url: pokemon.url,
+          dexNumber: index + 1,
+        }));
+        setPokemons(indexAdded);
+        setTotalPages(Math.ceil(response.data.results.length / itemsPerPage));
+        setIsLoading(false);
       }
     } catch (error) {
       console.log(error);
     }
   };
+
+  const startIndex = currentPage * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const subset = pokemons.slice(startIndex, endIndex);
+
+  const handlePageChange = (selectedPage) => {
+    setCurrentPage(selectedPage.selected);
+  };
+
   function capitalizeName(string) {
     if (string.includes("-")) {
       const array = string.split("-");
@@ -41,28 +63,58 @@ const DexPage = () => {
   return (
     <>
       <Center>
-        <Table striped withTableBorder style={{ width: "50vw" }}>
-          <Table.Thead>
-            <Table.Tr>
-              <Table.Th>PokéDex Number</Table.Th>
-              <Table.Th>Pokémon</Table.Th>
-              <Table.Th>Link</Table.Th>
-            </Table.Tr>
-          </Table.Thead>
-          <Table.Tbody>
-            {pokemons.map((pokemon, index) => {
-              return (
-                <Table.Tr key={index}>
-                  <Table.Td>{index + 1}</Table.Td>
-                  <Table.Td>{capitalizeName(pokemon.name)}</Table.Td>
-                  <Table.Td>
-                    <Link to={`/dex/pokemon/${index + 1}`}>More info</Link>
-                  </Table.Td>
-                </Table.Tr>
-              );
-            })}
-          </Table.Tbody>
-        </Table>
+        {isLoading ? (
+          <Loader color="red" type="dots" />
+        ) : (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "1em",
+            }}
+          >
+            {
+              <>
+                <ReactPaginate
+                  pageCount={totalPages}
+                  onPageChange={handlePageChange}
+                  forcePage={currentPage}
+                  previousLabel={"<<"}
+                  nextLabel={">>"}
+                  breakLabel={"..."}
+                  containerClassName="paginationContainer"
+                  activeClassName={"selectedPage"}
+                />
+                <Table striped withTableBorder style={{ width: "50vw" }}>
+                  <Table.Thead>
+                    <Table.Tr>
+                      <Table.Th>PokéDex Number</Table.Th>
+                      <Table.Th>Pokémon</Table.Th>
+                      <Table.Th>Link</Table.Th>
+                    </Table.Tr>
+                  </Table.Thead>
+                  <Table.Tbody>
+                    {subset.map((pokemon) => {
+                      return (
+                        <Table.Tr key={pokemon.dexNumber}>
+                          <Table.Td>{pokemon.dexNumber}</Table.Td>
+                          <Table.Td>{capitalizeName(pokemon.name)}</Table.Td>
+                          <Table.Td>
+                            <Link to={`/dex/pokemon/${pokemon.dexNumber}`}>
+                              More info
+                            </Link>
+                          </Table.Td>
+                        </Table.Tr>
+                      );
+                    })}
+                  </Table.Tbody>
+                </Table>
+              </>
+            }
+          </div>
+        )}
       </Center>
     </>
   );
