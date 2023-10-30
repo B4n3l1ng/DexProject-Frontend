@@ -1,9 +1,11 @@
-import { Center, Table } from "@mantine/core";
+import { Button, Center, Table } from "@mantine/core";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Loader } from "@mantine/core";
 import ReactPaginate from "react-paginate";
+import Loader from "../components/Loader";
+import capitalizeName from "../utils/capitalize";
 
 const DexPage = () => {
   const [pokemons, setPokemons] = useState([]);
@@ -15,7 +17,7 @@ const DexPage = () => {
   const fetchPokemons = async () => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_API_BASEURL}/pokemon?limit=2000`
+        `${import.meta.env.VITE_API_BASEURL}/pokemon?limit=1017`
       );
       if (response.status === 200) {
         const indexAdded = response.data.results.map((pokemon, index) => ({
@@ -59,7 +61,7 @@ const DexPage = () => {
   useEffect(() => {
     fetchPokemons();
   }, []);
-  console.log(pokemons);
+
   return (
     <>
       <Center>
