@@ -12,7 +12,7 @@ const MovesTable = ({ array, hasLevel }) => {
         margin: "auto",
       }}
     >
-      <Table.Thead style={{ backgroundColor: "#053742", color: "#39a2db" }}>
+      <Table.Thead>
         <Table.Tr>
           {hasLevel ? (
             <Table.Th style={{ textAlign: "center", color: "#fa5252" }}>
@@ -34,6 +34,7 @@ const MovesTable = ({ array, hasLevel }) => {
                 textAlign: "center",
                 backgroundColor: "#39a2db",
                 color: "black",
+                fontWeight: 600,
               }}
             >
               {hasLevel ? <Table.Td>{move.level}</Table.Td> : undefined}

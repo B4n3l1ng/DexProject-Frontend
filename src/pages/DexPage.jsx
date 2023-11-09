@@ -111,6 +111,16 @@ const DexPage = () => {
                     })}
                   </Table.Tbody>
                 </Table>
+                <ReactPaginate
+                  pageCount={totalPages}
+                  onPageChange={handlePageChange}
+                  forcePage={currentPage}
+                  previousLabel={"<<"}
+                  nextLabel={">>"}
+                  breakLabel={"..."}
+                  containerClassName="paginationContainer"
+                  activeClassName={"selectedPage"}
+                />
               </>
             }
           </div>

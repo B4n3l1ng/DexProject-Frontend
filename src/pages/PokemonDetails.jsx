@@ -158,26 +158,30 @@ const PokemonDetails = () => {
               </div>
               <div className="abilitiesBox boxWithRadius">
                 <div className="drkBlueBox">Abilities</div>
+                <div className="abilitiesTxt">
+                  {pokemon.abilities.map((ability) => (
+                    <div key={ability.slot} className="whiteText">
+                      {capitalizeName(ability.ability.name)}
+                    </div>
+                  ))}
 
-                {pokemon.abilities.map((ability) => (
-                  <div key={ability.slot} className="whiteText">
-                    {capitalizeName(ability.ability.name)}
-                  </div>
-                ))}
-                {pokemon.past_abilities?.length >= 1
-                  ? pokemon.past_abilities.map((pastAbility) => (
-                      <div
-                        key={`past${pastAbility.slot}`}
-                        className="whiteText"
-                      >
-                        {capitalizeName(pastAbility.abilities[0].ability.name)}{" "}
-                        until generation{" "}
-                        {capitalizeName(pastAbility.generation.name)
-                          .split(" ")[1]
-                          .toUpperCase()}
-                      </div>
-                    ))
-                  : undefined}
+                  {pokemon.past_abilities?.length >= 1
+                    ? pokemon.past_abilities.map((pastAbility) => (
+                        <div
+                          key={`past${pastAbility.slot}`}
+                          className="whiteText"
+                        >
+                          {capitalizeName(
+                            pastAbility.abilities[0].ability.name
+                          )}{" "}
+                          until generation{" "}
+                          {capitalizeName(pastAbility.generation.name)
+                            .split(" ")[1]
+                            .toUpperCase()}
+                        </div>
+                      ))
+                    : undefined}
+                </div>
               </div>
             </div>
             <div className="baseStatsBox boxWithRadius">
@@ -192,17 +196,17 @@ const PokemonDetails = () => {
                         {capitalizeName(element.stat.name)}
                       </div>
                       <div className="baseStatContainer">
-                        <div
-                          style={{
-                            width: `${element.base_stat * (50 / 100)}%`,
-                            backgroundColor: `${getStatColor(
-                              element.stat.name
-                            )}`,
-                            color: "black",
-                            fontWeight: "500",
-                          }}
-                        >
+                        <div className="stat">
                           {element.base_stat}
+                          <div
+                            className="statBar"
+                            style={{
+                              width: `${element.base_stat * (50 / 100)}%`,
+                              backgroundColor: `${getStatColor(
+                                element.stat.name
+                              )}`,
+                            }}
+                          ></div>
                         </div>
                       </div>
                     </div>

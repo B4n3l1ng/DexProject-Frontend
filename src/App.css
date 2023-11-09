@@ -78,7 +78,8 @@
 .boxWithRadius {
   background-color: #39a2db;
   border-radius: 2rem;
-  color: #053742;
+  color: #053742; /* 
+  padding: 1em; */
 }
 
 .carousel {
@@ -127,7 +128,8 @@
   align-items: center;
   gap: 1em;
   width: 50%;
-  padding: 0.1em 1em;
+  padding: 1em;
+  max-height: 100%;
   min-height: 100%;
 }
 
@@ -137,6 +139,7 @@
   width: 60%;
   text-align: center;
   border-radius: 2em;
+  border: 1px solid #053742;
 }
 
 .abilitiesBox {
@@ -146,9 +149,17 @@
   align-items: center;
   gap: 1.7em;
   width: 50%;
-  border: 1px solid black;
-  padding: 0.1em 1em;
+  padding: 1em;
   min-height: 100%;
+  max-height: 100%;
+}
+
+.abilitiesTxt {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1em;
 }
 
 .drkBlueBox {
@@ -171,15 +182,28 @@
 
 .baseStatsInner {
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 40% 70%;
   margin-bottom: 1em;
   color: white;
 }
 
+.stat {
+  display: grid;
+  grid-template-columns: 20% 180%;
+  gap: 1em;
+  font-weight: 700;
+  align-items: center;
+}
+
+.statBar {
+  border-radius: 16px;
+  height: 2em;
+  border: 1px solid #053742;
+}
+
 .baseStatName {
-  width: 50%;
+  width: 100%;
   text-align: left;
   padding-left: 3em;
   font-weight: 600;
@@ -273,4 +297,9 @@ table td {
 
 .loader {
   margin-top: 45.594vh;
+}
+
+#moveTableHeader {
+  text-align: "center" !important;
+  color: "#fa5252" !important;
 }
